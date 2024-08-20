@@ -1,28 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../components/Input"; // Assume this is your custom input component
-import { useAuthStore } from "../store/authStore"; // Custom hook for authentication
+import Input from "../components/Input";
+import { useAuthStore } from "../store/authStore";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); // Hook to navigate programmatically
+    const navigate = useNavigate();
 
-    const { login, isLoading, error } = useAuthStore(); // Custom hook
+    const { login, isLoading, error, isAuthenticated } = useAuthStore((state) => ({
+        login: state.login,
+        isLoading: state.isLoading,
+        error: state.error,
+        isAuthenticated: state.isAuthenticated,
+    }));
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await login(email, password); // Call the login function from the auth store
-            navigate('/'); // Redirect to the home page on successful login
+            await login(email, password);
         } catch (e) {
             console.log("Error during login:", e);
         }
     };
 
+    // Effect to handle redirection after login
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/dashboard');
+        }
+    }, [isAuthenticated, navigate]);
+
     return (
+        <>
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,6 +90,7 @@ const LoginPage = () => {
                 </p>
             </div>
         </motion.div>
+        </>
     );
 };
 

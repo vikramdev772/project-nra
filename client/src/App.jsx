@@ -49,18 +49,20 @@ function App() {
     if (isCheckingAuth) return <LoadingSpinner />;
 
     return (
-        <div className='min-h-screen bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500 flex items-center justify-center relative overflow-hidden sm:bg-gradient-to-tr md:bg-gradient-to-r lg:bg-gradient-to-l xl:bg-gradient-to-br'>
-            <FloatingShape color='bg-blue-500' size='w-64 h-64 sm:w-48 sm:h-48' top='-5%' left='10%' delay={0} />
-            <FloatingShape color='bg-blue-400' size='w-48 h-48 sm:w-36 sm:h-36' top='70%' left='80%' delay={5} />
-            <FloatingShape color='bg-blue-300' size='w-32 h-32 sm:w-24 sm:h-24' top='40%' left='-10%' delay={2} />
-
+        <>
+         <div className='min-h-screen bg-gradient-to-br from-blue-300 via-blue-500 to-blue-200 flex items-center justify-center relative overflow-hidden sm:bg-gradient-to-tr md:bg-gradient-to-r lg:bg-gradient-to-l xl:bg-gradient-to-br'>
+             {/* <FloatingShape color='bg-blue-500' size='w-64 h-64 sm:w-48 sm:h-48' top='-5%' left='10%' delay={0} />
+             <FloatingShape color='bg-blue-400' size='w-48 h-48 sm:w-36 sm:h-36' top='70%' left='80%' delay={5} />
+             <FloatingShape color='bg-blue-300' size='w-32 h-32 sm:w-24 sm:h-24' top='40%' left='-10%' delay={2} />
+         */}
             <Routes>
                 <Route
-                    path='/'
+                    path='/dashboard'
                     element={
-                        <ProtectedRoute>
-                            <UserDashboard />
-                        </ProtectedRoute>
+                        // <ProtectedRoute>
+                        //     <UserDashboard />
+                        // </ProtectedRoute>
+                        <UserDashboard />
                     }
                 />
                 <Route
@@ -99,7 +101,8 @@ function App() {
                 <Route path='*' element={<Navigate to='/login' replace />} />
             </Routes>
             <Toaster />
-        </div>
+         </div>
+        </>
     );
 }
 
